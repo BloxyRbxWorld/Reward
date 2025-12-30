@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blox World - مركز المكافآت</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --accent-color: #FFD700;
+            --bg-color: #f0f2f5;
+        }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        .container { max-width: 800px; margin: auto; padding: 20px; }
+        .hidden { display: none !important; }
+
+        /* تصميم صفحة التمويه / التحميل */
+        .landing-page {
+            text-align: center;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-top: 50px;
+        }
+        .landing-page img { width: 120px; border-radius: 25px; margin-bottom: 20px; }
+        .btn-download {
+            display: inline-block;
+            background: #28a745;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        /* تصميم كروت العروض */
+        .offers-header { text-align: center; margin-bottom: 30px; }
+        .offers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .offer-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .offer-card:hover { transform: translateY(-5px); }
+        .offer-card img { width: 70px; height: 70px; border-radius: 15px; margin: 0 auto 15px; }
+        .offer-card h3 { font-size: 1.1rem; margin: 0 0 10px; color: #222; }
+        .offer-card p { font-size: 0.9rem; color: #666; margin-bottom: 15px; height: 40px; overflow: hidden; }
+        .bloxy-value {
+            background: var(--accent-color);
+            color: #000;
+            font-weight: bold;
+            padding: 8px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .btn-go {
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--primary-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="landing-section" class="landing-page hidden">
+            <img src="logo.png" alt="Blox World Logo">
+            <h1>Blox World</h1>
+            <p>استكشف عالمك الخاص وابنِ مستقبلك في لعبتنا المذهلة.</p>
+            <p>للحصول على مكافآت حصرية، يرجى فتح الموقع من داخل اللعبة.</p>
+            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_ID" class="btn-download">تحميل اللعبة الآن</a>
+        </div>
+
+        <div id="offers-section" class="hidden">
+            <div class="offers-header">
+                <h1>مركز مكافآت Bloxy</h1>
+                <p>أكمل المهام البسيطة للحصول على العملات فوراً</p>
+            </div>
+            
+            <div id="loader" class="loader"></div>
+            <div id="offers-grid" class="offers-grid"></div>
+        </div>
+    </div>
+
+    <script>
+        // إعدادات الـ API الخاصة بك
+        const ApiKey = "6390b345fd0192336e62c0212281cf4d";
+        const UserId = "181134";
+
+        async function loadOffers(deviceId) {
+            const apiUrl = `https://d23rx8p5l6yry7.cloudfront.net/public/offers/feed.php?user_id=${UserId}&api_key=${ApiKey}&s1=${deviceId}`;
+            
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                displayOffers(data, deviceId);
+            } catch (error) {
+                document.getElementById('offers-grid').innerHTML = "<p>تعذر تحميل العروض، حاول لاحقاً.</p>";
+            } finally {
+                document.getElementById('loader').classList.add('hidden');
+            }
+        }
+
+        function displayOffers(offers, deviceId) {
+            const grid = document.getElementById('offers-grid');
+            if (!offers || offers.length === 0) {
+                grid.innerHTML = "<p>لا توجد عروض متاحة لبلدك حالياً.</p>";
+                return;
+            }
+
+            offers.forEach(offer => {
+                const bloxyValue = Math.floor(parseFloat(offer.user_payout) * 2000);
+                const card = document.createElement('div');
+                card.className = 'offer-card';
+                card.innerHTML = `
+                    <img src="${offer.network_icon}" alt="offer-icon">
+                    <h3>${offer.name}</h3>
+                    <p>${offer.anchor || 'أكمل هذه المهمة البسيطة'}</p>
+                    <div class="bloxy-value">${bloxyValue} Bloxy</div>
+                    <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن</a>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const deviceId = urlParams.get('uid');
+
+            if (deviceId && deviceId.length > 5) {
+                // مبروك، أنت مستخدم حقيقي
+                document.getElementById('offers-section').classList.remove('hidden');
+                loadOffers(deviceId);
+            } else {
+                // مراجع GitHub أو زائر غريب
+                document.getElementById('landing-section').classList.remove('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
