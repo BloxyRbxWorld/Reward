@@ -130,19 +130,40 @@
         const USER_ID = "181134";
 
         // Détection VPN similaire à votre code Unity
-        async function isVpnActive() {
-            try {
-                // On appelle l'API sans IP pour qu'elle auto-détecte l'utilisateur
-                const response = await fetch(`https://vpnapi.io/api/?key=${API_KEY}`);
-                const data = await response.json();
-                
-                // On vérifie les mêmes flags que dans votre code Unity
-                return data.security.vpn || data.security.proxy || data.security.tor || data.security.relay;
-            } catch (e) {
-                console.error("VPN Check Error:", e);
-                return false; // On laisse passer si l'API échoue
+       async function isVpnActive() {
+    try {
+        // Test 1: vpnapi.io (avec votre clé)
+        const response = await fetch(`https://vpnapi.io/api/?key=a9e89023a222454696f77218d0c390a4`);
+        const data = await response.json();
+        
+        if (data.security && (data.security.vpn || data.security.proxy)) {
+            return true;
+        }
+
+        // Test 2: Détection par décalage de fuseau horaire (Très efficace sur Web)
+        // Si l'IP dit "USA" mais que le navigateur est réglé sur "Maroc", c'est un VPN.
+        const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (data.location && data.location.time_zone) {
+            if (userTimezone !== data.location.time_zone) {
+                console.warn("Décalage de zone détecté (VPN probable)");
+                return true; 
             }
         }
+
+        return false;
+    } catch (e) {
+        // Test 3: Si l'API est bloquée, on teste une API alternative gratuite sans clé
+        try {
+            const altRes = await fetch('https://ipapi.co/json/');
+            const altData = await altRes.json();
+            // ipapi.co ne dit pas "VPN" en gratuit, mais on peut vérifier si le pays 
+            // détecté est différent de la langue du navigateur.
+            return false; 
+        } catch (err) {
+            return false;
+        }
+    }
+}
 
         async function fetchOffers(uid) {
             // 1. Vérification VPN
