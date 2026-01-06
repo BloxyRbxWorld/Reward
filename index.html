@@ -102,7 +102,7 @@
             transform: translateY(-5px); 
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
-        .offer-card img { 
+        .offer-card .offer-icon { 
             width: 70px; 
             height: 70px; 
             border-radius: 15px; 
@@ -271,17 +271,18 @@
                 const response = await fetch('https://vpnapi.io/api/?key=free');
                 const data = await response.json();
                 
+                console.log('VPN API Response:', data);
+                
                 // Check if VPN, proxy, or Tor is detected
                 const isVPN = data.security?.vpn || data.security?.proxy || data.security?.tor || false;
                 
                 if (isVPN) {
-                    console.log('VPN/Proxy detected:', data.security);
+                    console.log('VPN/Proxy/Tor detected:', data.security);
                 }
                 
                 return isVPN;
             } catch (error) {
-                console.warn('VPN check failed:', error);
-                // If API fails, allow access (don't block legitimate users)
+                console.warn('VPN check error:', error);
                 return false;
             }
         }
@@ -325,7 +326,7 @@
                 const card = document.createElement('div');
                 card.className = 'offer-card';
                 card.innerHTML = `
-                    <img src="${offer.network_icon}" alt="offer-icon">
+                    <img class="offer-icon" src="${offer.network_icon}" alt="offer-icon">
                     <h3>${offer.name}</h3>
                     <p>${offer.anchor || 'Complete this simple task'}</p>
                     <div class="bloxy-value">
