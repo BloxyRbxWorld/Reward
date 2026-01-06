@@ -21,8 +21,8 @@
         .container { max-width: 800px; margin: auto; padding: 20px; }
         .hidden { display: none !important; }
 
-        /* تصميم صفحة التمويه / التحميل */
-        .landing-page {
+        /* صفحة وصف اللعبة */
+        .game-description {
             text-align: center;
             background: white;
             padding: 40px 20px;
@@ -30,22 +30,58 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             margin-top: 50px;
         }
-        .landing-page img { width: 120px; border-radius: 25px; margin-bottom: 20px; }
+        .game-description img { 
+            width: 120px; 
+            border-radius: 25px; 
+            margin-bottom: 20px; 
+        }
+        .game-description h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        .game-description p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin: 15px 0;
+        }
+        .features {
+            text-align: right;
+            margin: 30px 0;
+            padding: 0 20px;
+        }
+        .features li {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #444;
+        }
         .btn-download {
             display: inline-block;
             background: #28a745;
             color: white;
-            padding: 15px 30px;
+            padding: 15px 40px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             font-size: 1.2rem;
             margin-top: 20px;
-            transition: 0.3s;
+            transition: all 0.3s;
+        }
+        .btn-download:hover {
+            background: #218838;
+            transform: scale(1.05);
         }
 
-        /* تصميم كروت العروض */
-        .offers-header { text-align: center; margin-bottom: 30px; }
+        /* صفحة العروض */
+        .offers-header { 
+            text-align: center; 
+            margin-bottom: 30px; 
+        }
+        .offers-header h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+        }
         .offers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -62,10 +98,28 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        .offer-card:hover { transform: translateY(-5px); }
-        .offer-card img { width: 70px; height: 70px; border-radius: 15px; margin: 0 auto 15px; }
-        .offer-card h3 { font-size: 1.1rem; margin: 0 0 10px; color: #222; }
-        .offer-card p { font-size: 0.9rem; color: #666; margin-bottom: 15px; height: 40px; overflow: hidden; }
+        .offer-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+        .offer-card img { 
+            width: 70px; 
+            height: 70px; 
+            border-radius: 15px; 
+            margin: 0 auto 15px; 
+        }
+        .offer-card h3 { 
+            font-size: 1.1rem; 
+            margin: 0 0 10px; 
+            color: #222; 
+        }
+        .offer-card p { 
+            font-size: 0.9rem; 
+            color: #666; 
+            margin-bottom: 15px; 
+            height: 40px; 
+            overflow: hidden; 
+        }
         .bloxy-value {
             background: var(--accent-color);
             color: #000;
@@ -82,26 +136,55 @@
             padding: 10px;
             border-radius: 8px;
             font-weight: bold;
+            transition: background 0.3s;
         }
-        .loader { border: 5px solid #f3f3f3; border-top: 5px solid var(--primary-color); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .btn-go:hover {
+            background: #0056b3;
+        }
+        .loader { 
+            border: 5px solid #f3f3f3; 
+            border-top: 5px solid var(--primary-color); 
+            border-radius: 50%; 
+            width: 40px; 
+            height: 40px; 
+            animation: spin 1s linear infinite; 
+            margin: 20px auto; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div id="landing-section" class="landing-page hidden">
+        <!-- صفحة وصف اللعبة (بدون uid) -->
+        <div id="game-page" class="game-description hidden">
             <img src="logo.png" alt="Blox World Logo">
-            <h1>Blox World</h1>
-            <p>استكشف عالمك الخاص وابنِ مستقبلك في لعبتنا المذهلة.</p>
-            <p>للحصول على مكافآت حصرية، يرجى فتح الموقع من داخل اللعبة.</p>
-            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_ID" class="btn-download">تحميل اللعبة الآن</a>
+            <h1>🎮 Bloxy Rbx World</h1>
+            <p><strong>استكشف عالماً لا حدود له من الإبداع والمغامرة!</strong></p>
+            
+            <p>انضم إلى ملايين اللاعبين حول العالم في تجربة لعب فريدة حيث يمكنك:</p>
+            
+            <ul class="features">
+                <li>🏗️ بناء عالمك الخاص بأدوات إبداعية متقدمة</li>
+                <li>🎯 إكمال المهام اليومية والحصول على مكافآت حصرية</li>
+                <li>👥 اللعب مع أصدقائك في وضع متعدد اللاعبين</li>
+                <li>💎 جمع العملات والموارد النادرة</li>
+                <li>🏆 التنافس في التحديات والبطولات</li>
+                <li>🎨 تخصيص شخصيتك بآلاف الخيارات</li>
+            </ul>
+
+            <p>حمّل اللعبة الآن وابدأ مغامرتك!</p>
+            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_ID" class="btn-download">📥 تحميل اللعبة</a>
         </div>
 
-        <div id="offers-section" class="hidden">
+        <!-- صفحة العروض (مع uid) -->
+        <div id="offers-page" class="hidden">
             <div class="offers-header">
-                <h1>مركز مكافآت Bloxy</h1>
-                <p>أكمل المهام البسيطة للحصول على العملات فوراً</p>
+                <h1>💰 مركز مكافآت Bloxy</h1>
+                <p>أكمل المهام البسيطة واحصل على عملات Bloxy فوراً</p>
             </div>
             
             <div id="loader" class="loader"></div>
@@ -110,7 +193,6 @@
     </div>
 
     <script>
-        // إعدادات الـ API الخاصة بك
         const ApiKey = "6390b345fd0192336e62c0212281cf4d";
         const UserId = "181134";
 
@@ -120,18 +202,19 @@
             try {
                 const response = await fetch(apiUrl);
                 const data = await response.json();
-                displayOffers(data, deviceId);
+                displayOffers(data);
             } catch (error) {
-                document.getElementById('offers-grid').innerHTML = "<p>تعذر تحميل العروض، حاول لاحقاً.</p>";
+                document.getElementById('offers-grid').innerHTML = "<p>❌ تعذر تحميل العروض، يرجى المحاولة لاحقاً.</p>";
             } finally {
                 document.getElementById('loader').classList.add('hidden');
             }
         }
 
-        function displayOffers(offers, deviceId) {
+        function displayOffers(offers) {
             const grid = document.getElementById('offers-grid');
+            
             if (!offers || offers.length === 0) {
-                grid.innerHTML = "<p>لا توجد عروض متاحة لبلدك حالياً.</p>";
+                grid.innerHTML = "<p>📭 لا توجد عروض متاحة لبلدك حالياً.</p>";
                 return;
             }
 
@@ -143,8 +226,8 @@
                     <img src="${offer.network_icon}" alt="offer-icon">
                     <h3>${offer.name}</h3>
                     <p>${offer.anchor || 'أكمل هذه المهمة البسيطة'}</p>
-                    <div class="bloxy-value">${bloxyValue} Bloxy</div>
-                    <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن</a>
+                    <div class="bloxy-value">💎 ${bloxyValue} Bloxy</div>
+                    <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن ←</a>
                 `;
                 grid.appendChild(card);
             });
@@ -155,12 +238,12 @@
             const deviceId = urlParams.get('uid');
 
             if (deviceId && deviceId.length > 5) {
-                // مبروك، أنت مستخدم حقيقي
-                document.getElementById('offers-section').classList.remove('hidden');
+                // عرض صفحة العروض
+                document.getElementById('offers-page').classList.remove('hidden');
                 loadOffers(deviceId);
             } else {
-                // مراجع GitHub أو زائر غريب
-                document.getElementById('landing-section').classList.remove('hidden');
+                // عرض صفحة وصف اللعبة
+                document.getElementById('game-page').classList.remove('hidden');
             }
         };
     </script>
