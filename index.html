@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,250 +10,114 @@
             --primary-color: #007bff;
             --accent-color: #FFD700;
             --bg-color: #f0f2f5;
+            --danger-color: #dc3545;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            color: #333;
+            margin: 0; padding: 0; color: #333; text-align: center;
         }
         .container { max-width: 800px; margin: auto; padding: 20px; }
         .hidden { display: none !important; }
 
-        /* صفحة وصف اللعبة */
-        .game-description {
-            text-align: center;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-top: 50px;
-        }
-        .game-description img { 
+        /* --- STYLE UNIFIÉ DU LOGO (Identique à la description) --- */
+        .main-logo { 
             width: 120px; 
+            height: 120px;
             border-radius: 25px; 
-            margin-bottom: 20px; 
-        }
-        .game-description h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-        .game-description p {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: #555;
-            margin: 15px 0;
-        }
-        .features {
-            text-align: left;
-            margin: 30px 0;
-            padding: 0 20px;
-        }
-        .features li {
-            margin: 10px 0;
-            font-size: 1rem;
-            color: #444;
-        }
-        .btn-download {
-            display: inline-block;
-            background: #28a745;
-            color: white;
-            padding: 15px 40px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 20px;
-            transition: all 0.3s;
-        }
-        .btn-download:hover {
-            background: #218838;
-            transform: scale(1.05);
+            margin: 20px auto;
+            display: block;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
-        /* صفحة العروض */
-        .offers-header { 
-            text-align: center; 
-            margin-bottom: 30px; 
+        /* Sections */
+        .card-panel {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-top: 20px;
         }
-        .offers-header h1 {
-            color: var(--primary-color);
-            font-size: 2rem;
+
+        h1 { color: var(--primary-color); font-size: 1.8rem; }
+        
+        .features { text-align: right; display: inline-block; margin: 20px 0; padding: 0; list-style: none; }
+        .features li { margin: 8px 0; font-size: 1rem; }
+
+        .btn-main {
+            display: inline-block;
+            background: #28a745; color: white;
+            padding: 12px 35px; border-radius: 50px;
+            text-decoration: none; font-weight: bold;
+            transition: 0.3s; border: none; cursor: pointer;
         }
+
+        /* Offers Grid */
         .offers-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px; margin-top: 20px;
         }
         .offer-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background: #fff; border-radius: 15px; padding: 15px;
+            border: 1px solid #eee; display: flex; flex-direction: column; align-items: center;
         }
-        .offer-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-        }
-        .offer-card .offer-icon { 
-            width: 70px; 
-            height: 70px; 
-            border-radius: 15px; 
-            margin: 0 auto 15px; 
-        }
-        .offer-card h3 { 
-            font-size: 1.1rem; 
-            margin: 0 0 10px; 
-            color: #222; 
-        }
-        .offer-card p { 
-            font-size: 0.9rem; 
-            color: #666; 
-            margin-bottom: 15px; 
-            height: 40px; 
-            overflow: hidden; 
-        }
+        .offer-icon { width: 65px; height: 65px; border-radius: 12px; margin-bottom: 10px; }
+        
         .bloxy-value {
-            background: var(--accent-color);
-            color: #000;
-            font-weight: bold;
-            padding: 8px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            background: var(--accent-color); color: #000;
+            padding: 5px 12px; border-radius: 8px; font-weight: bold;
+            display: flex; align-items: center; gap: 5px; margin-bottom: 10px;
         }
-        .bloxy-value img {
-            width: 24px;
-            height: 24px;
-            margin: 0;
-        }
+        .bloxy-value img { width: 18px; }
+
         .btn-go {
-            background: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background 0.3s;
-        }
-        .btn-go:hover {
-            background: #0056b3;
-        }
-        .loader { 
-            border: 5px solid #f3f3f3; 
-            border-top: 5px solid var(--primary-color); 
-            border-radius: 50%; 
-            width: 40px; 
-            height: 40px; 
-            animation: spin 1s linear infinite; 
-            margin: 20px auto; 
-        }
-        @keyframes spin { 
-            0% { transform: rotate(0deg); } 
-            100% { transform: rotate(360deg); } 
+            background: var(--primary-color); color: white;
+            text-decoration: none; padding: 8px 20px; border-radius: 8px; width: 90%;
         }
 
-        /* VPN Detection Panel */
-        .vpn-panel {
-            background: white;
-            border-radius: 20px;
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-width: 500px;
-            margin: 50px auto;
+        /* VPN Warning */
+        .vpn-warning { border: 2px solid var(--danger-color); }
+        .vpn-warning h2 { color: var(--danger-color); }
+
+        .loader { 
+            border: 4px solid #f3f3f3; border-top: 4px solid var(--primary-color); 
+            border-radius: 50%; width: 40px; height: 40px; 
+            animation: spin 1s linear infinite; margin: 20px auto; 
         }
-        .vpn-panel .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-        .vpn-panel h2 {
-            color: #dc3545;
-            font-size: 1.8rem;
-            margin-bottom: 15px;
-        }
-        .vpn-panel p {
-            color: #666;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin: 15px 0;
-        }
-        .vpn-panel .steps {
-            text-align: left;
-            margin: 20px auto;
-            max-width: 350px;
-        }
-        .vpn-panel .steps li {
-            margin: 10px 0;
-            color: #555;
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Game Description Page (without uid) -->
-        <div id="game-page" class="game-description hidden">
-            <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" alt="Blox World Logo">
+        <div id="game-page" class="card-panel hidden">
+            <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" class="main-logo">
             <h1>🎮 Bloxy Rbx World</h1>
-            <p><strong>Explore an endless world of creativity and adventure!</strong></p>
-            
-            <p>Join millions of players worldwide in a unique gaming experience where you can:</p>
-            
+            <p>ابنِ عالمك الخاص وابدأ مغامرتك الآن!</p>
             <ul class="features">
-                <li>🏗️ Build your own world with advanced creative tools</li>
-                <li>🎯 Complete daily missions and earn exclusive rewards</li>
-                <li>👥 Play with your friends in multiplayer mode</li>
-                <li>💎 Collect coins and rare resources</li>
-                <li>🏆 Compete in challenges and tournaments</li>
-                <li>🎨 Customize your character with thousands of options</li>
+                <li>🏗️ بناء عوالم إبداعية</li>
+                <li>🎯 مهام يومية ومكافآت</li>
+                <li>💎 جمع عملات نادرة</li>
             </ul>
-
-            <p>Download the game now and start your adventure!</p>
-            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_ID" class="btn-download">📥 Download Game</a>
+            <br>
+            <a href="YOUR_STORE_URL" class="btn-main">📥 تحميل اللعبة</a>
         </div>
 
-        <!-- Offers Page (with uid) -->
         <div id="offers-page" class="hidden">
-            <!-- VPN Detection Panel -->
-            <div id="vpn-panel" class="vpn-panel hidden">
-                <div class="icon">🚫</div>
-                <h2>VPN Detected</h2>
-                <p><strong>We've detected that you're using a VPN or proxy connection.</strong></p>
-                <p>To access offers and rewards, please disable your VPN and refresh the page.</p>
-                
-                <div class="steps">
-                    <p><strong>How to disable VPN:</strong></p>
-                    <ol>
-                        <li>Close your VPN application</li>
-                        <li>Wait a few seconds</li>
-                        <li>Refresh this page</li>
-                    </ol>
-                </div>
-                
-                <p style="color: #999; font-size: 0.9rem; margin-top: 20px;">
-                    This helps us ensure fair rewards distribution and prevent abuse.
-                </p>
+            
+            <div id="vpn-panel" class="card-panel vpn-warning hidden">
+                <div style="font-size: 40px;">🚫</div>
+                <h2>عذراً، تم اكتشاف VPN</h2>
+                <p>يرجى إيقاف تشغيل أي تطبيق VPN أو Proxy لتتمكن من عرض المهام والحصول على مكافآتك.</p>
+                <button onclick="location.reload()" class="btn-main" style="background: var(--primary-color);">تحديث الصفحة</button>
             </div>
 
-            <!-- Normal Offers Content -->
             <div id="offers-content">
-                <div class="offers-header">
-                    <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" alt="Blox World Logo">
-                    <h1>💰 Bloxy Rewards Center</h1>
-                    <p>Complete simple tasks and earn Bloxy coins instantly</p>
-                </div>
+                <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" class="main-logo">
+                <h1>💰 مركز مكافآت Bloxy</h1>
+                <p>أكمل المهام البسيطة لتحصل على عملاتك</p>
                 
                 <div id="loader" class="loader"></div>
                 <div id="offers-grid" class="offers-grid"></div>
@@ -262,93 +126,79 @@
     </div>
 
     <script>
-        const ApiKey = "6390b345fd0192336e62c0212281cf4d";
-        const UserId = "181134";
+        const API_KEY = "6390b345fd0192336e62c0212281cf4d";
+        const USER_ID = "181134";
 
-        // Check for VPN using vpnapi.io
-        async function checkVPN() {
+        // Détection VPN similaire à votre code Unity
+        async function isVpnActive() {
             try {
-                const response = await fetch('https://vpnapi.io/api/?key=free');
+                // On appelle l'API sans IP pour qu'elle auto-détecte l'utilisateur
+                const response = await fetch(`https://vpnapi.io/api/?key=${API_KEY}`);
                 const data = await response.json();
                 
-                console.log('VPN API Response:', data);
-                
-                // Check if VPN, proxy, or Tor is detected
-                const isVPN = data.security?.vpn || data.security?.proxy || data.security?.tor || false;
-                
-                if (isVPN) {
-                    console.log('VPN/Proxy/Tor detected:', data.security);
-                }
-                
-                return isVPN;
-            } catch (error) {
-                console.warn('VPN check error:', error);
-                return false;
+                // On vérifie les mêmes flags que dans votre code Unity
+                return data.security.vpn || data.security.proxy || data.security.tor || data.security.relay;
+            } catch (e) {
+                console.error("VPN Check Error:", e);
+                return false; // On laisse passer si l'API échoue
             }
         }
 
-        async function loadOffers(deviceId) {
-            // First check for VPN
-            const vpnDetected = await checkVPN();
-            
-            if (vpnDetected) {
-                // Show VPN panel and hide offers
+        async function fetchOffers(uid) {
+            // 1. Vérification VPN
+            const vpn = await isVpnActive();
+            if (vpn) {
                 document.getElementById('vpn-panel').classList.remove('hidden');
                 document.getElementById('offers-content').classList.add('hidden');
-                document.getElementById('loader').classList.add('hidden');
                 return;
             }
 
-            // VPN not detected, load offers normally
-            const apiUrl = `https://d23rx8p5l6yry7.cloudfront.net/public/offers/feed.php?user_id=${UserId}&api_key=${ApiKey}&s1=${deviceId}`;
+            // 2. Chargement des offres
+            const url = `https://d23rx8p5l6yry7.cloudfront.net/public/offers/feed.php?user_id=${USER_ID}&api_key=${API_KEY}&s1=${uid}`;
             
             try {
-                const response = await fetch(apiUrl);
-                const data = await response.json();
-                displayOffers(data);
-            } catch (error) {
-                document.getElementById('offers-grid').innerHTML = "<p>❌ Failed to load offers, please try again later.</p>";
+                const res = await fetch(url);
+                const offers = await res.json();
+                renderOffers(offers);
+            } catch (err) {
+                document.getElementById('offers-grid').innerHTML = "❌ خطأ في تحميل البيانات.";
             } finally {
                 document.getElementById('loader').classList.add('hidden');
             }
         }
 
-        function displayOffers(offers) {
+        function renderOffers(offers) {
             const grid = document.getElementById('offers-grid');
-            
             if (!offers || offers.length === 0) {
-                grid.innerHTML = "<p>📭 No offers available for your country at the moment.</p>";
+                grid.innerHTML = "<p>لا توجد عروض حالياً لبلدك.</p>";
                 return;
             }
 
             offers.forEach(offer => {
-                const bloxyValue = Math.floor(parseFloat(offer.user_payout) * 2000);
-                const card = document.createElement('div');
-                card.className = 'offer-card';
-                card.innerHTML = `
-                    <img class="offer-icon" src="${offer.network_icon}" alt="offer-icon">
-                    <h3>${offer.name}</h3>
-                    <p>${offer.anchor || 'Complete this simple task'}</p>
-                    <div class="bloxy-value">
-                        <img src="https://github.com/BloxyRbxWorld/image/blob/main/coin.png?raw=true" alt="coin">
-                        ${bloxyValue} Bloxy
+                const coins = Math.floor(parseFloat(offer.user_payout) * 2000);
+                const html = `
+                    <div class="offer-card">
+                        <img src="${offer.network_icon}" class="offer-icon">
+                        <div style="font-weight:bold; font-size:0.9rem; margin-bottom:5px;">${offer.name}</div>
+                        <div class="bloxy-value">
+                            <img src="https://github.com/BloxyRbxWorld/image/blob/main/coin.png?raw=true">
+                            ${coins}
+                        </div>
+                        <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن</a>
                     </div>
-                    <a href="${offer.url}" target="_blank" class="btn-go">Start Now →</a>
                 `;
-                grid.appendChild(card);
+                grid.insertAdjacentHTML('beforeend', html);
             });
         }
 
-        window.onload = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const deviceId = urlParams.get('uid');
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            const uid = params.get('uid');
 
-            if (deviceId && deviceId.length > 5) {
-                // Show offers page
+            if (uid && uid.length > 5) {
                 document.getElementById('offers-page').classList.remove('hidden');
-                loadOffers(deviceId);
+                fetchOffers(uid);
             } else {
-                // Show game description page
                 document.getElementById('game-page').classList.remove('hidden');
             }
         };
