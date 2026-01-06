@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blox World - مركز المكافآت</title>
+    <title>Blox World - Rewards Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -20,7 +20,7 @@
         .container { max-width: 800px; margin: auto; padding: 20px; }
         .hidden { display: none !important; }
 
-        /* --- STYLE UNIFIÉ DU LOGO (Identique à la description) --- */
+        /* --- UNIFIED LOGO STYLE --- */
         .main-logo { 
             width: 120px; 
             height: 120px;
@@ -42,8 +42,9 @@
 
         h1 { color: var(--primary-color); font-size: 1.8rem; }
         
-        .features { text-align: right; display: inline-block; margin: 20px 0; padding: 0; list-style: none; }
+        .features { text-align: left; display: inline-block; margin: 20px 0; padding: 0; list-style: none; }
         .features li { margin: 8px 0; font-size: 1rem; }
+        .features li::before { content: "•"; color: var(--primary-color); font-weight: bold; display: inline-block; width: 1em; margin-left: -1em; }
 
         .btn-main {
             display: inline-block;
@@ -95,29 +96,29 @@
         <div id="game-page" class="card-panel hidden">
             <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" class="main-logo">
             <h1>🎮 Bloxy Rbx World</h1>
-            <p>ابنِ عالمك الخاص وابدأ مغامرتك الآن!</p>
+            <p>Build your own world and start your adventure now!</p>
             <ul class="features">
-                <li>🏗️ بناء عوالم إبداعية</li>
-                <li>🎯 مهام يومية ومكافآت</li>
-                <li>💎 جمع عملات نادرة</li>
+                <li>🏗️ Build creative worlds</li>
+                <li>🎯 Daily missions and rewards</li>
+                <li>💎 Collect rare coins</li>
             </ul>
             <br>
-            <a href="YOUR_STORE_URL" class="btn-main">📥 تحميل اللعبة</a>
+            <a href="YOUR_STORE_URL" class="btn-main">📥 Download Game</a>
         </div>
 
         <div id="offers-page" class="hidden">
             
             <div id="vpn-panel" class="card-panel vpn-warning hidden">
                 <div style="font-size: 40px;">🚫</div>
-                <h2>عذراً، تم اكتشاف VPN</h2>
-                <p>يرجى إيقاف تشغيل أي تطبيق VPN أو Proxy لتتمكن من عرض المهام والحصول على مكافآتك.</p>
-                <button onclick="location.reload()" class="btn-main" style="background: var(--primary-color);">تحديث الصفحة</button>
+                <h2>Sorry, VPN Detected</h2>
+                <p>Please disable any VPN or Proxy application to view available tasks and claim your rewards.</p>
+                <button onclick="location.reload()" class="btn-main" style="background: var(--primary-color);">Refresh Page</button>
             </div>
 
             <div id="offers-content">
                 <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" class="main-logo">
-                <h1>💰 مركز مكافآت Bloxy</h1>
-                <p>أكمل المهام البسيطة لتحصل على عملاتك</p>
+                <h1>💰 Bloxy Rewards Center</h1>
+                <p>Complete simple tasks to earn your coins</p>
                 
                 <div id="loader" class="loader"></div>
                 <div id="offers-grid" class="offers-grid"></div>
@@ -129,44 +130,39 @@
         const API_KEY = "6390b345fd0192336e62c0212281cf4d";
         const USER_ID = "181134";
 
-        // Détection VPN similaire à votre code Unity
-       async function isVpnActive() {
-    try {
-        // Test 1: vpnapi.io (avec votre clé)
-        const response = await fetch(`https://vpnapi.io/api/?key=a9e89023a222454696f77218d0c390a4`);
-        const data = await response.json();
-        
-        if (data.security && (data.security.vpn || data.security.proxy)) {
-            return true;
-        }
+        async function isVpnActive() {
+            try {
+                // Test 1: vpnapi.io check
+                const response = await fetch(`https://vpnapi.io/api/?key=a9e89023a222454696f77218d0c390a4`);
+                const data = await response.json();
+                
+                if (data.security && (data.security.vpn || data.security.proxy)) {
+                    return true;
+                }
 
-        // Test 2: Détection par décalage de fuseau horaire (Très efficace sur Web)
-        // Si l'IP dit "USA" mais que le navigateur est réglé sur "Maroc", c'est un VPN.
-        const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        if (data.location && data.location.time_zone) {
-            if (userTimezone !== data.location.time_zone) {
-                console.warn("Décalage de zone détecté (VPN probable)");
-                return true; 
+                // Test 2: Timezone Mismatch Detection
+                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                if (data.location && data.location.time_zone) {
+                    if (userTimezone !== data.location.time_zone) {
+                        console.warn("Timezone mismatch detected (Probable VPN)");
+                        return true; 
+                    }
+                }
+
+                return false;
+            } catch (e) {
+                // Test 3: Fallback to alternative API if blocked
+                try {
+                    const altRes = await fetch('https://ipapi.co/json/');
+                    const altData = await altRes.json();
+                    return false; 
+                } catch (err) {
+                    return false;
+                }
             }
         }
 
-        return false;
-    } catch (e) {
-        // Test 3: Si l'API est bloquée, on teste une API alternative gratuite sans clé
-        try {
-            const altRes = await fetch('https://ipapi.co/json/');
-            const altData = await altRes.json();
-            // ipapi.co ne dit pas "VPN" en gratuit, mais on peut vérifier si le pays 
-            // détecté est différent de la langue du navigateur.
-            return false; 
-        } catch (err) {
-            return false;
-        }
-    }
-}
-
         async function fetchOffers(uid) {
-            // 1. Vérification VPN
             const vpn = await isVpnActive();
             if (vpn) {
                 document.getElementById('vpn-panel').classList.remove('hidden');
@@ -174,7 +170,6 @@
                 return;
             }
 
-            // 2. Chargement des offres
             const url = `https://d23rx8p5l6yry7.cloudfront.net/public/offers/feed.php?user_id=${USER_ID}&api_key=${API_KEY}&s1=${uid}`;
             
             try {
@@ -182,7 +177,7 @@
                 const offers = await res.json();
                 renderOffers(offers);
             } catch (err) {
-                document.getElementById('offers-grid').innerHTML = "❌ خطأ في تحميل البيانات.";
+                document.getElementById('offers-grid').innerHTML = "❌ Error loading data.";
             } finally {
                 document.getElementById('loader').classList.add('hidden');
             }
@@ -191,7 +186,7 @@
         function renderOffers(offers) {
             const grid = document.getElementById('offers-grid');
             if (!offers || offers.length === 0) {
-                grid.innerHTML = "<p>لا توجد عروض حالياً لبلدك.</p>";
+                grid.innerHTML = "<p>No offers available for your country at this moment.</p>";
                 return;
             }
 
@@ -205,7 +200,7 @@
                             <img src="https://github.com/BloxyRbxWorld/image/blob/main/coin.png?raw=true">
                             ${coins}
                         </div>
-                        <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن</a>
+                        <a href="${offer.url}" target="_blank" class="btn-go">Start Now</a>
                     </div>
                 `;
                 grid.insertAdjacentHTML('beforeend', html);
