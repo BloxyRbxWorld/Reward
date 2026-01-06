@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blox World - مركز المكافآت</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-color: #007bff;
@@ -12,7 +12,7 @@
             --bg-color: #f0f2f5;
         }
         body {
-            font-family: 'Tajawal', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg-color);
             margin: 0;
             padding: 0;
@@ -47,7 +47,7 @@
             margin: 15px 0;
         }
         .features {
-            text-align: right;
+            text-align: left;
             margin: 30px 0;
             padding: 0 20px;
         }
@@ -159,32 +159,33 @@
 <body>
 
     <div class="container">
-        <!-- صفحة وصف اللعبة (بدون uid) -->
+        <!-- Game Description Page (without uid) -->
         <div id="game-page" class="game-description hidden">
-            <img src="logo.png" alt="Blox World Logo">
+            <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" alt="Blox World Logo">
             <h1>🎮 Bloxy Rbx World</h1>
-            <p><strong>استكشف عالماً لا حدود له من الإبداع والمغامرة!</strong></p>
+            <p><strong>Explore an endless world of creativity and adventure!</strong></p>
             
-            <p>انضم إلى ملايين اللاعبين حول العالم في تجربة لعب فريدة حيث يمكنك:</p>
+            <p>Join millions of players worldwide in a unique gaming experience where you can:</p>
             
             <ul class="features">
-                <li>🏗️ بناء عالمك الخاص بأدوات إبداعية متقدمة</li>
-                <li>🎯 إكمال المهام اليومية والحصول على مكافآت حصرية</li>
-                <li>👥 اللعب مع أصدقائك في وضع متعدد اللاعبين</li>
-                <li>💎 جمع العملات والموارد النادرة</li>
-                <li>🏆 التنافس في التحديات والبطولات</li>
-                <li>🎨 تخصيص شخصيتك بآلاف الخيارات</li>
+                <li>🏗️ Build your own world with advanced creative tools</li>
+                <li>🎯 Complete daily missions and earn exclusive rewards</li>
+                <li>👥 Play with your friends in multiplayer mode</li>
+                <li>💎 Collect coins and rare resources</li>
+                <li>🏆 Compete in challenges and tournaments</li>
+                <li>🎨 Customize your character with thousands of options</li>
             </ul>
 
-            <p>حمّل اللعبة الآن وابدأ مغامرتك!</p>
-            <a href="https://apps.apple.com/us/app/bloxy-guys-rbx/id6739949919" class="btn-download">📥 تحميل اللعبة</a>
+            <p>Download the game now and start your adventure!</p>
+            <a href="https://play.google.com/store/apps/details?id=YOUR_APP_ID" class="btn-download">📥 Download Game</a>
         </div>
 
-        <!-- صفحة العروض (مع uid) -->
+        <!-- Offers Page (with uid) -->
         <div id="offers-page" class="hidden">
             <div class="offers-header">
-                <h1>💰 مركز مكافآت Bloxy</h1>
-                <p>أكمل المهام البسيطة واحصل على عملات Bloxy فوراً</p>
+                <img src="https://raw.githubusercontent.com/BloxyRbxWorld/image/refs/heads/main/icone.png" alt="Blox World Logo">
+                <h1>💰 Bloxy Rewards Center</h1>
+                <p>Complete simple tasks and earn Bloxy coins instantly</p>
             </div>
             
             <div id="loader" class="loader"></div>
@@ -204,7 +205,7 @@
                 const data = await response.json();
                 displayOffers(data);
             } catch (error) {
-                document.getElementById('offers-grid').innerHTML = "<p>❌ تعذر تحميل العروض، يرجى المحاولة لاحقاً.</p>";
+                document.getElementById('offers-grid').innerHTML = "<p>❌ Failed to load offers, please try again later.</p>";
             } finally {
                 document.getElementById('loader').classList.add('hidden');
             }
@@ -214,7 +215,7 @@
             const grid = document.getElementById('offers-grid');
             
             if (!offers || offers.length === 0) {
-                grid.innerHTML = "<p>📭 لا توجد عروض متاحة لبلدك حالياً.</p>";
+                grid.innerHTML = "<p>📭 No offers available for your country at the moment.</p>";
                 return;
             }
 
@@ -225,9 +226,9 @@
                 card.innerHTML = `
                     <img src="${offer.network_icon}" alt="offer-icon">
                     <h3>${offer.name}</h3>
-                    <p>${offer.anchor || 'أكمل هذه المهمة البسيطة'}</p>
+                    <p>${offer.anchor || 'Complete this simple task'}</p>
                     <div class="bloxy-value">💎 ${bloxyValue} Bloxy</div>
-                    <a href="${offer.url}" target="_blank" class="btn-go">ابدأ الآن ←</a>
+                    <a href="${offer.url}" target="_blank" class="btn-go">Start Now →</a>
                 `;
                 grid.appendChild(card);
             });
@@ -238,11 +239,11 @@
             const deviceId = urlParams.get('uid');
 
             if (deviceId && deviceId.length > 5) {
-                // عرض صفحة العروض
+                // Show offers page
                 document.getElementById('offers-page').classList.remove('hidden');
                 loadOffers(deviceId);
             } else {
-                // عرض صفحة وصف اللعبة
+                // Show game description page
                 document.getElementById('game-page').classList.remove('hidden');
             }
         };
