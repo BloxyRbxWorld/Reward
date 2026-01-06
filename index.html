@@ -128,6 +128,15 @@
             border-radius: 10px;
             margin-bottom: 15px;
             font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .bloxy-value img {
+            width: 24px;
+            height: 24px;
+            margin: 0;
         }
         .btn-go {
             background: var(--primary-color);
@@ -227,7 +236,10 @@
                     <img src="${offer.network_icon}" alt="offer-icon">
                     <h3>${offer.name}</h3>
                     <p>${offer.anchor || 'Complete this simple task'}</p>
-                    <div class="bloxy-value">💎 ${bloxyValue} Bloxy</div>
+                    <div class="bloxy-value">
+                        <img src="https://github.com/BloxyRbxWorld/image/blob/main/coin.png?raw=true" alt="coin">
+                        ${bloxyValue} Bloxy
+                    </div>
                     <a href="${offer.url}" target="_blank" class="btn-go">Start Now →</a>
                 `;
                 grid.appendChild(card);
