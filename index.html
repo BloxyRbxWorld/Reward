@@ -266,19 +266,45 @@
         }
 
         async function isVpnActive() {
-            try {
-                const response = await fetch(`https://vpnapi.io/api/?key=a9e89023a222454696f77218d0c390a4`);
-                const data = await response.json();
-                if (data.security && (data.security.vpn || data.security.proxy)) return true;
-                const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-                if (data.location && data.location.time_zone) {
-                    if (userTimezone !== data.location.time_zone) return true;
+            const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+            const keys = [
+                "918964d703cb4337ae9ee18775a1dc93",
+                "a9e89023a222454696f77218d0c390a4",
+                "1f969a752d2e41dba5674fe96ef1680d"
+            ];
+
+            for (let i = 0; i < keys.length; i++) {
+                try {
+                    const res = await fetch(`https://vpnapi.io/api/?key=${keys[i]}`);
+                    const data = await res.json();
+
+                    // Check if this key is saturated / invalid
+                    if (!data.security) {
+                        console.warn(`Key ${i+1} saturated or invalid, trying next...`);
+                        continue;
+                    }
+
+                    // Key worked - use result as final answer
+                    console.log(`Key ${i+1} OK`);
+                    if (data.security.vpn || data.security.proxy || data.security.tor || data.security.relay) {
+                        console.warn(`VPN detected by key ${i+1}`);
+                        return true;
+                    }
+                    if (data.location && data.location.time_zone && data.location.time_zone !== userTimezone) {
+                        console.warn(`Timezone mismatch via key ${i+1}`);
+                        return true;
+                    }
+                    return false;
+
+                } catch (e) {
+                    console.warn(`Key ${i+1} failed:`, e);
                 }
-                return false;
-            } catch (e) {
-                try { await fetch('https://ipapi.co/json/'); return false; }
-                catch (err) { return false; }
             }
+
+            // All 3 keys saturated or failed -> show offers
+            console.warn("All keys exhausted - allowing access");
+            return false;
         }
 
         async function fetchOffers(uid) {
