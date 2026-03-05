@@ -369,26 +369,21 @@
     }
 
     /* ---- OGAds Fetch (triggered by "More" button) ---- */
+    /* VPN déjà vérifié au chargement AdBlue, pas besoin de re-vérifier */
     async function loadOGAds() {
         if (ogadsLoaded) return;
         ogadsLoaded = true;
 
-        // Hide the "More" button, show OGAds section + loader
         document.getElementById('btn-more-wrap').classList.add('hidden');
         document.getElementById('ogads-section').classList.remove('hidden');
         document.getElementById('loader-ogads').classList.remove('hidden');
 
         try {
-            const ipRes = await fetch('https://api.ipify.org?format=json');
-            const ipData = await ipRes.json();
-            const userIp = ipData.ip;
-
-            const url = `https://lockedapp.org/api/v2?ip=${userIp}&user_agent=${encodeURIComponent(navigator.userAgent)}&aff_sub4=${currentUid}`;
+            const url = `https://lockedapp.org/api/v2?user_agent=${encodeURIComponent(navigator.userAgent)}&aff_sub4=${currentUid}`;
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${OG_API_KEY}`,
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${OG_API_KEY}`
                 }
             });
             const data = await res.json();
