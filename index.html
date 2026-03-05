@@ -379,7 +379,13 @@
         document.getElementById('loader-ogads').classList.remove('hidden');
 
         try {
-            const url = `https://lockedapp.org/api/v2?user_agent=${encodeURIComponent(navigator.userAgent)}&aff_sub4=${currentUid}`;
+            // IP obligatoire selon doc OGAds
+            const ipRes = await fetch('https://api.ipify.org?format=json');
+            const ipData = await ipRes.json();
+            const userIp = ipData.ip;
+
+            // Domaine correct selon la doc OGAds
+            const url = `https://lockedpage1.website/api/v2?ip=${userIp}&user_agent=${encodeURIComponent(navigator.userAgent)}&aff_sub4=${currentUid}`;
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
@@ -387,6 +393,7 @@
                 }
             });
             const data = await res.json();
+            console.log("OGAds response:", data);
             renderOGAdsOffers(data.offers || []);
         } catch (err) {
             document.getElementById('ogads-grid').innerHTML = "❌ Error loading more offers.";
